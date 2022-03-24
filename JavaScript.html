@@ -1,0 +1,48 @@
+<script>
+	/*
+  *THIS FUNCTION CALL THE getData() FUNCTION IN THE Code.gs FILE, 
+  *AND PASS RETURNED DATA TO showData() FUNCTION
+  */
+  google.script.run.withSuccessHandler(showData).getData();
+
+  //THIS FUNCTION GENERATE THE DATA TABLE FROM THE DATA ARRAY
+  function showData(dataArray){
+    $(document).ready(function(){
+      $('#data-table').DataTable({
+        data: dataArray,
+        //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+        columns: [
+          {"title":"Chapter"},
+          {"title":"Lecture"},
+
+          {"title":"Class Link",
+          render: function(data, type, row, meta){
+            if(type === 'display'){
+              data = '<a href="' + data + '" target="_blank"> Class Link</a> ';
+            }
+            return data; 
+          },
+          
+          },
+
+          {"title":"Class Note",
+          render: function(data, type, row, meta){
+            if(type === 'display'){
+              data = '<a href="' + data + '" target="_blank"> Note Link</a> ';
+            }
+            return data; 
+          },
+          
+          }
+
+
+        ],
+        buttons: [ 'colvis' ],
+        dom:
+            "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+      });
+    });
+  }
+</script>
